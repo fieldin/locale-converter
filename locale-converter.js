@@ -1,6 +1,37 @@
-var localeConvertor = (function () {
+var localeConverter = (function () {
 
     var UNITS = {
+        "CENTIARE":{
+            name:"CENTIARE",
+            som: "SI",
+            type: "area"
+        },
+        "HECTARE":{
+            name:"HECTARE",
+            som: "SI",
+            type: "area"
+        },
+        // Square meter
+        "SQM":{
+            name:"SQM",
+            som: "METRIC",
+            type: "area"
+        },
+        "DUNAM":{
+            name:"DUNAM",
+            som: "METRIC",
+            type: "area"
+        },
+        "SQFT":{
+            name:"SQFT",
+            som: "IMPERIAL",
+            type: "area"
+        },
+        "ACRE":{
+            name:"ACRE",
+            som: "IMPERIAL",
+            type: "area"
+        },
         "KPH":{
             name:"KPH",
             som: "SI",
@@ -45,7 +76,79 @@ var localeConvertor = (function () {
 
     // Systems of measurement
     var SOM = {
+        METRIC:{
+            area:{
+                units:{
+                    sqm:{
+                        to_base: function (value) {
+                            return value;
+                        },
+                        from_base: function (value) {
+                            return value;
+                        }
+                    },
+                    dunam:{
+                        to_base: function (value) {
+                            return value * 1000;
+                        },
+                        from_base: function (value) {
+                            return value / 1000;
+                        }
+                    }
+                },
+                conversion_formula:{
+                    // To square foot
+                    IMPERIAL: function (value) {
+                        return value * 10.76391041671;
+                    },
+                    // To Centiare
+                    SI: function (value) {
+                        return value;
+                    },
+                    METRIC: function (value) {
+                        return value;
+                    },
+                }
+            }
+        },
         SI: {
+            area:{
+                units:{
+                    centiare:{
+                        to_base: function (value) {
+                            return value;
+                        },
+                        from_base: function (value) {
+                            return value;
+                        }
+                    },
+                    // Base unit is Centiare
+                    hectare:{
+                        to_base: function (value) {
+                            return value * 10000;
+                        },
+                        from_base: function (value) {
+                            return value / 10000;
+                        }
+                    }
+                    
+                },
+                conversion_formula:{
+                    // To square foot
+                    IMPERIAL: function (value) {
+                        return value * 10.76391041671;
+                    },
+
+                    // To Square meter
+                    METRIC: function (value) {
+                        return value;
+                    },
+
+                    SI: function (value) {
+                        return value;
+                    } 
+                }
+            },
             speed:{
                 units:{
                     kph:{
@@ -105,6 +208,44 @@ var localeConvertor = (function () {
         }
     },
     IMPERIAL: {
+        area:{
+            units:{
+                // Base unit is square foot
+                sqft:{
+                    to_base: function (value) {
+                        return value;
+                    },
+                    from_base: function (value) {
+                        return value;
+                    }
+                },
+                
+                acre:{
+                    to_base: function (value) {
+                        return value * 43560;
+                    },
+                    from_base: function (value) {
+                        return value / 43560;
+                    }
+                }
+            },
+            conversion_formula:{
+                // To centiare
+                SI: function (value) {
+                    return value * 0.09290304;
+                },
+
+                // To Square meter
+                METRIC: function (value) {
+                    return value * 0.09290304;
+                },
+                
+                // To Square meter
+                IMPERIAL: function (value) {
+                    return value;
+                } 
+            }
+        },
         speed:{
             units:{
                 mph:{
@@ -117,7 +258,7 @@ var localeConvertor = (function () {
                 }
             },
             conversion_formula:{
-             IMPERIAL: function (value) {
+               IMPERIAL: function (value) {
                 return value;
             },
             SI: function (value) {
@@ -165,11 +306,13 @@ var localeConvertor = (function () {
     var LOCALE = {
         "he-IL": {
             weight: "SI",
-            speed:"SI"
+            speed:"SI",
+            area:"METRIC"
         },
         "en-US": {
             weight: "IMPERIAL",
-            speed: "IMPERIAL"
+            speed: "IMPERIAL",
+            area: "IMPERIAL",
         }
     };
 
@@ -187,7 +330,7 @@ var localeConvertor = (function () {
 
         var to = function (target_units) {
             if (!target_locale) {
-                console.error("Please set target locale like this: localeConvertor.setTargetLocale('en-US');");
+                console.error("Please set target locale like this: localeConverter.setTargetLocale('en-US');");
             }
             else {
                 var target_som = LOCALE[target_locale][input_type];
