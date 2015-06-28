@@ -205,7 +205,7 @@ var localeConvertor = (function () {
                 var converted_base_value = SOM["SI"][input_type].conversion_formula[target_som](si_base_value);
 
                 var targetTypeObj = SOM[target_som][input_type];
-                var converted_value = targetTypeObj.units[target_units].from_base(converted_base_value);
+                var converted_value = targetTypeObj.units[target_units.toLowerCase()].from_base(converted_base_value);
 
                 return converted_value;
             }
