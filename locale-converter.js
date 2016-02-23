@@ -42,6 +42,16 @@ var localeConverter = (function () {
             som: "IMPERIAL",
             type: "speed"
         },
+        "LITER":{
+            name:"LITER",
+            som: "SI",
+            type: "volume"
+        },
+        "GALLON":{
+            name:"GALLON",
+            som: "IMPERIAL",
+            type: "volume"
+        },
         "KILO": {
             name:"KILO",
             som: "SI",
@@ -78,6 +88,7 @@ var localeConverter = (function () {
     var SOM = {
         METRIC:{
             area:{
+                common_unit:"dunam",
                 units:{
                     sqm:{
                         to_base: function (value) {
@@ -113,6 +124,7 @@ var localeConverter = (function () {
         },
         SI: {
             area:{
+                common_unit:"dunam",
                 units:{
                     centiare:{
                         to_base: function (value) {
@@ -150,6 +162,7 @@ var localeConverter = (function () {
                 }
             },
             speed:{
+                common_unit:"kph",
                 units:{
                     kph:{
                         to_base: function (value) {
@@ -169,7 +182,29 @@ var localeConverter = (function () {
                     } 
                 }
             },
+            volume:{
+                common_unit:"liter",
+                units:{
+                    liter:{
+                        to_base: function (value) {
+                            return value;
+                        },
+                        from_base: function (value) {
+                            return value;
+                        }
+                    }
+                },
+                conversion_formula:{
+                    IMPERIAL: function (value) {
+                        return value * 0.264172;
+                    },
+                    SI: function (value) {
+                        return value;
+                    } 
+                }
+            },
             weight: {
+                common_unit:"gram",
                 units: {
                     gram: {
                         to_base: function (value) {
@@ -179,23 +214,23 @@ var localeConverter = (function () {
                             return value * 1000;
                         }
                     },
-                // base unit
-                kilo: {
-                    to_base: function (value) {
-                        return value;
+                    // base unit
+                    kilo: {
+                        to_base: function (value) {
+                            return value;
+                        },
+                        from_base: function (value) {
+                            return value;
+                        }
                     },
-                    from_base: function (value) {
-                        return value;
+                    ton: {
+                        to_base: function (value) {
+                            return value * 1000;
+                        },
+                        from_base: function (value) {
+                            return value / 1000;
+                        }
                     }
-                },
-                ton: {
-                    to_base: function (value) {
-                        return value * 1000;
-                    },
-                    from_base: function (value) {
-                        return value / 1000;
-                    }
-                }
             },
             conversion_formula: {
                 IMPERIAL: function (value) {
@@ -209,6 +244,7 @@ var localeConverter = (function () {
     },
     IMPERIAL: {
         area:{
+            common_unit:"acre",
             units:{
                 // Base unit is square foot
                 sqft:{
@@ -247,6 +283,7 @@ var localeConverter = (function () {
             }
         },
         speed:{
+            common_unit:"mph",
             units:{
                 mph:{
                     to_base: function (value) {
@@ -260,13 +297,35 @@ var localeConverter = (function () {
             conversion_formula:{
                IMPERIAL: function (value) {
                 return value;
+                },
+                SI: function (value) {
+                    return value * 1.609344;
+                } 
+            }
+        },
+        volume:{
+            common_unit:"gallon",
+            units:{
+                gallon:{
+                    to_base: function (value) {
+                        return value;
+                    },
+                    from_base: function (value) {
+                        return value;
+                    }
+                }
             },
-            SI: function (value) {
-                return value * 1.609344;
-            } 
-        }
-    },
+            conversion_formula:{
+               IMPERIAL: function (value) {
+                return value;
+                },
+                SI: function (value) {
+                    return value / 0.264172;
+                } 
+            }
+        },
     weight: {
+        common_unit:"pound",
         units: {
             ounce: {
                 to_base: function (value) {
@@ -307,12 +366,14 @@ var localeConverter = (function () {
         "he-IL": {
             weight: "SI",
             speed:"SI",
-            area:"METRIC"
+            area:"METRIC",
+            volume: "SI"
         },
         "en-US": {
             weight: "IMPERIAL",
             speed: "IMPERIAL",
             area: "IMPERIAL",
+            volume: "IMPERIAL"
         }
     };
 
@@ -328,7 +389,8 @@ var localeConverter = (function () {
         input_units = params.units.toLowerCase(),
         input_type = UNITS[params.units].type;
 
-        var to = function (target_units) {
+        var to = function (target_unit) {
+
             if (!target_locale) {
                 console.error("Please set target locale like this: localeConverter.setTargetLocale('en-US');");
             }
@@ -342,13 +404,15 @@ var localeConverter = (function () {
                 // Apply to input_value
                 var base_value = typeObj.units[input_units].to_base(input_value);
 
+                // Say we don't have a target_unit, grab the base unit from the locale / field of conversion
+                target_unit = target_unit || SOM[target_som][input_type].common_unit;
 
                 // Grab the conversion formula from base_units of input_type from input_locale to target_locale
                 var si_base_value = typeObj.conversion_formula["SI"](base_value);
                 var converted_base_value = SOM["SI"][input_type].conversion_formula[target_som](si_base_value);
 
                 var targetTypeObj = SOM[target_som][input_type];
-                var converted_value = targetTypeObj.units[target_units.toLowerCase()].from_base(converted_base_value);
+                var converted_value = targetTypeObj.units[target_unit.toLowerCase()].from_base(converted_base_value);
 
                 return converted_value;
             }
