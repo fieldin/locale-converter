@@ -81,6 +81,16 @@ var localeConverter = (function () {
             name:"TON",
             som: "IMPERIAL",
             type: "weight"
+        },
+        "CELSIUS":{
+            name:"CELSIUS",
+            som: "SI",
+            type: "degree"
+        },
+        "FAHRENHEIT":{
+            name:"FAHRENHEIT",
+            som: "IMPERIAL",
+            type: "degree"
         }
     };
 
@@ -197,6 +207,27 @@ var localeConverter = (function () {
                 conversion_formula:{
                     IMPERIAL: function (value) {
                         return value * 0.264172;
+                    },
+                    SI: function (value) {
+                        return value;
+                    } 
+                }
+            },
+            degree:{
+                common_unit:"celsius",
+                units:{
+                    celsius:{
+                        to_base: function (value) {
+                            return value;
+                        },
+                        from_base: function (value) {
+                            return value;
+                        }
+                    }
+                },
+                conversion_formula:{
+                    IMPERIAL: function (value) {
+                        return value * 1.8 + 32;
                     },
                     SI: function (value) {
                         return value;
@@ -324,6 +355,27 @@ var localeConverter = (function () {
                 } 
             }
         },
+        degree:{
+            common_unit:"fahrenheit",
+            units:{
+                fahrenheit:{
+                    to_base: function (value) {
+                        return value;
+                    },
+                    from_base: function (value) {
+                        return value;
+                    }
+                }
+            },
+            conversion_formula:{
+               IMPERIAL: function (value) {
+                return value;
+                },
+                SI: function (value) {
+                    return (value - 32) / 1.8;
+                } 
+            }
+        },
     weight: {
         common_unit:"pound",
         units: {
@@ -367,13 +419,15 @@ var localeConverter = (function () {
             weight: "SI",
             speed:"SI",
             area:"METRIC",
-            volume: "SI"
+            volume: "SI",
+            degree: "SI"
         },
         "en-US": {
             weight: "IMPERIAL",
             speed: "IMPERIAL",
             area: "IMPERIAL",
-            volume: "IMPERIAL"
+            volume: "IMPERIAL",
+            degree: "IMPERIAL"
         }
     };
 
