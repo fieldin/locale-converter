@@ -91,6 +91,16 @@ var localeConverter = (function () {
             name:"FAHRENHEIT",
             som: "IMPERIAL",
             type: "degree"
+        },
+        "METER":{
+            name:"METER",
+            som: "METRIC",
+            type: "distance"
+        },
+        "YARD":{
+            name:"YARD",
+            som: "IMPERIAL",
+            type: "distance"
         }
     };
 
@@ -130,7 +140,31 @@ var localeConverter = (function () {
                         return value;
                     },
                 }
-            }
+            },
+            distance:{
+                common_unit:"meter",
+                units:{
+                    meter:{
+                        to_base: function (value) {
+                            return value;
+                        },
+                        from_base: function (value) {
+                            return value;
+                        }
+                    }
+                },
+                conversion_formula:{
+                    IMPERIAL: function (value) {
+                        return value / 1.09361;
+                    },
+                    SI: function (value) {
+                        return value;
+                    },
+                    METRIC: function (value) {
+                        return value;
+                    }
+                }
+            },
         },
         SI: {
             area:{
@@ -232,6 +266,30 @@ var localeConverter = (function () {
                     SI: function (value) {
                         return value;
                     } 
+                }
+            },
+            distance:{
+                common_unit:"meter",
+                units:{
+                    meter:{
+                        to_base: function (value) {
+                            return value;
+                        },
+                        from_base: function (value) {
+                            return value;
+                        }
+                    }
+                },
+                conversion_formula:{
+                    IMPERIAL: function (value) {
+                        return value * 1.09361;
+                    },
+                    SI: function (value) {
+                        return value;
+                    },
+                    METRIC: function (value) {
+                        return value;
+                    }
                 }
             },
             weight: {
@@ -376,6 +434,27 @@ var localeConverter = (function () {
                 } 
             }
         },
+        distance:{
+            common_unit:"yard",
+            units:{
+                yard:{
+                    to_base: function (value) {
+                        return value;
+                    },
+                    from_base: function (value) {
+                        return value;
+                    }
+                }
+            },
+            conversion_formula:{
+                IMPERIAL: function (value) {
+                    return value;
+                },
+                METRIC: function (value) {
+                    return value * 1.09361;
+                } 
+            }
+        },
     weight: {
         common_unit:"pound",
         units: {
@@ -420,14 +499,16 @@ var localeConverter = (function () {
             speed:"SI",
             area:"METRIC",
             volume: "SI",
-            degree: "SI"
+            degree: "SI",
+            distance: "METRIC"
         },
         "en-US": {
             weight: "IMPERIAL",
             speed: "IMPERIAL",
             area: "IMPERIAL",
             volume: "IMPERIAL",
-            degree: "IMPERIAL"
+            degree: "IMPERIAL",
+            distance: "IMPERIAL"
         }
     };
 
