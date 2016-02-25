@@ -463,7 +463,7 @@ distance:{
                 return value / 1760;
             }
         },
-        mile{
+        mile:{
             to_base: function (value) {
                 return value;
             },
