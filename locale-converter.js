@@ -173,7 +173,7 @@ var localeConverter = (function () {
                 },
                 conversion_formula:{
                     IMPERIAL: function (value) {
-                        return value / 0.621371192;
+                        return value / 1.609344;
                     },
                     SI: function (value) {
                         return value;
@@ -308,7 +308,7 @@ var localeConverter = (function () {
                 },
                 conversion_formula:{
                     IMPERIAL: function (value) {
-                        return value / 0.621371192;
+                        return value / 1.609344;
                     },
                     SI: function (value) {
                         return value;
