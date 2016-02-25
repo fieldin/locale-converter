@@ -101,6 +101,16 @@ var localeConverter = (function () {
             name:"YARD",
             som: "IMPERIAL",
             type: "distance"
+        },
+        "KM":{
+            name:"KM",
+            som: "METRIC",
+            type: "distance"
+        },
+        "MILE":{
+            name:"MILE",
+            som: "IMPERIAL",
+            type: "distance"
         }
     };
 
@@ -142,9 +152,17 @@ var localeConverter = (function () {
                 }
             },
             distance:{
-                common_unit:"meter",
+                common_unit:"km",
                 units:{
                     meter:{
+                        to_base: function (value) {
+                            return value / 1000;
+                        },
+                        from_base: function (value) {
+                            return value * 1000;
+                        }
+                    },
+                    km:{
                         to_base: function (value) {
                             return value;
                         },
@@ -155,7 +173,7 @@ var localeConverter = (function () {
                 },
                 conversion_formula:{
                     IMPERIAL: function (value) {
-                        return value / 1.09361;
+                        return value / 0.621371192;
                     },
                     SI: function (value) {
                         return value;
@@ -320,21 +338,21 @@ var localeConverter = (function () {
                             return value / 1000;
                         }
                     }
-            },
-            conversion_formula: {
-                IMPERIAL: function (value) {
-                    return value * 0.453592;
                 },
-                SI: function (value) {
-                    return value;
+                conversion_formula: {
+                    IMPERIAL: function (value) {
+                        return value * 0.453592;
+                    },
+                    SI: function (value) {
+                        return value;
+                    }
                 }
             }
-        }
-    },
-    IMPERIAL: {
-        area:{
-            common_unit:"acre",
-            units:{
+        },
+        IMPERIAL: {
+            area:{
+                common_unit:"acre",
+                units:{
                 // Base unit is square foot
                 sqft:{
                     to_base: function (value) {
@@ -386,86 +404,94 @@ var localeConverter = (function () {
             conversion_formula:{
                IMPERIAL: function (value) {
                 return value;
-                },
-                SI: function (value) {
-                    return value * 1.609344;
-                } 
-            }
-        },
-        volume:{
-            common_unit:"gallon",
-            units:{
-                gallon:{
-                    to_base: function (value) {
-                        return value;
-                    },
-                    from_base: function (value) {
-                        return value;
-                    }
-                }
             },
-            conversion_formula:{
-               IMPERIAL: function (value) {
-                return value;
-                },
-                SI: function (value) {
-                    return value / 0.264172;
-                } 
-            }
-        },
-        degree:{
-            common_unit:"fahrenheit",
-            units:{
-                fahrenheit:{
-                    to_base: function (value) {
-                        return value;
-                    },
-                    from_base: function (value) {
-                        return value;
-                    }
-                }
-            },
-            conversion_formula:{
-               IMPERIAL: function (value) {
-                return value;
-                },
-                SI: function (value) {
-                    return (value - 32) / 1.8;
-                } 
-            }
-        },
-        distance:{
-            common_unit:"yard",
-            units:{
-                yard:{
-                    to_base: function (value) {
-                        return value;
-                    },
-                    from_base: function (value) {
-                        return value;
-                    }
-                }
-            },
-            conversion_formula:{
-                IMPERIAL: function (value) {
+            SI: function (value) {
+                return value * 1.609344;
+            } 
+        }
+    },
+    volume:{
+        common_unit:"gallon",
+        units:{
+            gallon:{
+                to_base: function (value) {
                     return value;
                 },
-                METRIC: function (value) {
-                    return value * 1.09361;
-                } 
+                from_base: function (value) {
+                    return value;
+                }
             }
         },
-    weight: {
-        common_unit:"pound",
-        units: {
-            ounce: {
-                to_base: function (value) {
-                    return value * 16;
-                },
-                from_base: function (value) {
-                    return value / 16;
-                }
+        conversion_formula:{
+           IMPERIAL: function (value) {
+            return value;
+        },
+        SI: function (value) {
+            return value / 0.264172;
+        } 
+    }
+},
+degree:{
+    common_unit:"fahrenheit",
+    units:{
+        fahrenheit:{
+            to_base: function (value) {
+                return value;
             },
+            from_base: function (value) {
+                return value;
+            }
+        }
+    },
+    conversion_formula:{
+       IMPERIAL: function (value) {
+        return value;
+    },
+    SI: function (value) {
+        return (value - 32) / 1.8;
+    } 
+}
+},
+distance:{
+    common_unit:"mile",
+    units:{
+        yard:{
+            to_base: function (value) {
+                return value / 1760;
+            },
+            from_base: function (value) {
+                return value / 1760;
+            }
+        },
+        mile{
+            to_base: function (value) {
+                return value;
+            },
+            from_base: function (value) {
+                return value;
+            }
+        }
+    },
+    conversion_formula:{
+        IMPERIAL: function (value) {
+            return value;
+        },
+        METRIC: function (value) {
+            return value * 1.609344;
+        } 
+    }
+},
+weight: {
+    common_unit:"pound",
+    units: {
+        ounce: {
+            to_base: function (value) {
+                return value * 16;
+            },
+            from_base: function (value) {
+                return value / 16;
+            }
+        },
                     // base unit
                     pound: {
                         to_base: function (value) {
