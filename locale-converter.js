@@ -287,9 +287,17 @@ var localeConverter = (function () {
                 }
             },
             distance:{
-                common_unit:"meter",
+                common_unit:"km",
                 units:{
                     meter:{
+                        to_base: function (value) {
+                            return value / 1000;
+                        },
+                        from_base: function (value) {
+                            return value * 1000;
+                        }
+                    },
+                    km:{
                         to_base: function (value) {
                             return value;
                         },
@@ -300,7 +308,7 @@ var localeConverter = (function () {
                 },
                 conversion_formula:{
                     IMPERIAL: function (value) {
-                        return value * 1.09361;
+                        return value / 0.621371192;
                     },
                     SI: function (value) {
                         return value;
