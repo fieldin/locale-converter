@@ -536,6 +536,14 @@ weight: {
             degree: "SI",
             distance: "METRIC"
         },
+        "it-IT": {
+            weight: "SI",
+            speed:"SI",
+            area:"SI",
+            volume: "SI",
+            degree: "SI",
+            distance: "METRIC"
+        },
         "en-US": {
             weight: "IMPERIAL",
             speed: "IMPERIAL",
