@@ -186,7 +186,7 @@ var localeConverter = (function () {
         },
         SI: {
             area:{
-                common_unit:"dunam",
+                common_unit:"hectare",
                 units:{
                     centiare:{
                         to_base: function (value) {
