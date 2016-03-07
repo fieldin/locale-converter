@@ -560,11 +560,11 @@ weight: {
     var target_locale;
 
     var ConversionRequest = function (params) {
-
-        var input_locale = params.locale,
+        // origin locale
+        var origin_locale = params.locale,
         input_value = params.value,
-        input_units = params.units.toLowerCase(),
-        input_type = UNITS[params.units].type;
+        origin_units = (params.units && params.units.toLowerCase()),
+        input_type = params.type || UNITS[params.units].type;
 
         var to = function (target_unit) {
 
@@ -575,16 +575,19 @@ weight: {
                 var target_som = LOCALE[target_locale][input_type];
                 // First normalize to base units
 
-                // Grab the conversion formula from input_units to base_units for this type and locale
-                var typeObj = SOM[LOCALE[input_locale][input_type]][input_type];
+                // Grab the conversion formula from origin_units to base_units for this type and locale
+                var typeObj = SOM[LOCALE[origin_locale][input_type]][input_type];
+
+                // If we dont get origin_units we should get it from the content (locale) - the common unit
+                origin_units = origin_units || typeObj.common_unit;
 
                 // Apply to input_value
-                var base_value = typeObj.units[input_units].to_base(input_value);
+                var base_value = typeObj.units[origin_units].to_base(input_value);
 
                 // Say we don't have a target_unit, grab the base unit from the locale / field of conversion
                 target_unit = target_unit || SOM[target_som][input_type].common_unit;
 
-                // Grab the conversion formula from base_units of input_type from input_locale to target_locale
+                // Grab the conversion formula from base_units of input_type from origin_locale to target_locale
                 var si_base_value = typeObj.conversion_formula["SI"](base_value);
                 var converted_base_value = SOM["SI"][input_type].conversion_formula[target_som](si_base_value);
 
