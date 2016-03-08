@@ -319,7 +319,7 @@ var localeConverter = (function () {
                 }
             },
             weight: {
-                common_unit:"gram",
+                common_unit:"kilo",
                 units: {
                     gram: {
                         to_base: function (value) {
