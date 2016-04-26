@@ -349,7 +349,7 @@ var localeConverter = (function () {
                 },
                 conversion_formula: {
                     IMPERIAL: function (value) {
-                        return value * 0.453592;
+                        return value / 0.453592;
                     },
                     SI: function (value) {
                         return value;
@@ -520,7 +520,7 @@ weight: {
                 },
                 conversion_formula: {
                     SI: function (value) {
-                        return value / 0.453592;
+                        return value * 0.453592;
                     }
                 }
             }
