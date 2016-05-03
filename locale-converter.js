@@ -560,7 +560,7 @@ var ConversionRequest = function (params) {
                 // First normalize to base units
 
                 // Grab the conversion formula from origin_units to base_units for this type and locale
-                var typeObj = SOM[origin_som][input_type];
+                var typeObj = SOM[origin_som][input_type] || SOM["SI"][input_type];
 
                 // If we dont get origin_units we should get it from the content (locale) - the common unit
                 origin_units = origin_units || typeObj.common_unit;
