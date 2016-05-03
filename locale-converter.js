@@ -576,7 +576,7 @@ var ConversionRequest = function (params) {
                 var si_base_value = typeObj.conversion_formula["SI"](base_value);
                 var converted_base_value = SOM["SI"][input_type].conversion_formula[target_som](si_base_value);
 
-                var targetTypeObj = SOM[target_som][input_type];
+                var targetTypeObj = SOM[target_som][input_type] || SOM["SI"][input_type];
                 var converted_value = targetTypeObj.units[target_unit.toLowerCase()].from_base(converted_base_value);
 
                 return converted_value;
