@@ -239,6 +239,9 @@ var localeConverter = (function () {
                     IMPERIAL: function (value) {
                         return value / 1.609344;
                     },
+                    METRIC:function (value){
+                        return value;
+                    },
                     SI: function (value) {
                         return value;
                     } 
@@ -260,6 +263,9 @@ var localeConverter = (function () {
                     IMPERIAL: function (value) {
                         return value * 0.264172;
                     },
+                    METRIC:function (value){
+                        return value;
+                    },
                     SI: function (value) {
                         return value;
                     } 
@@ -280,6 +286,9 @@ var localeConverter = (function () {
                 conversion_formula:{
                     IMPERIAL: function (value) {
                         return value * 1.8 + 32;
+                    },
+                    METRIC:function (value){
+                        return value;
                     },
                     SI: function (value) {
                         return value;
@@ -350,6 +359,9 @@ var localeConverter = (function () {
                 conversion_formula: {
                     IMPERIAL: function (value) {
                         return value / 0.453592;
+                    },
+                    METRIC:function (value){
+                        return value;
                     },
                     SI: function (value) {
                         return value;
@@ -534,7 +546,7 @@ var target_som;
 
 var ConversionRequest = function (params) {
         // origin locale
-        var origin_som = params.origin_som || "SI",
+        var origin_som = params.origin_som || "METRIC",
         input_value = params.value,
         origin_units = (params.units && params.units.toLowerCase()),
         input_type = params.type || UNITS[params.units].type;
