@@ -500,88 +500,61 @@ weight: {
                 return value / 16;
             }
         },
-                    // base unit
-                    pound: {
-                        to_base: function (value) {
-                            return value;
-                        },
-                        from_base: function (value) {
-                            return value;
-                        }
-                    },
-                    ton: {
-                        to_base: function (value) {
-                            return value / 2240;
-                        },
-                        from_base: function (value) {
-                            return value * 2240;
-                        }
-                    }
-                },
-                conversion_formula: {
-                    SI: function (value) {
-                        return value * 0.453592;
-                    }
-                }
+        // base unit
+        pound: {
+            to_base: function (value) {
+                return value;
+            },
+            from_base: function (value) {
+                return value;
+            }
+        },
+        ton: {
+            to_base: function (value) {
+                return value / 2240;
+            },
+            from_base: function (value) {
+                return value * 2240;
             }
         }
-    };
-
-    var LOCALE = {
-        "he-IL": {
-            weight: "SI",
-            speed:"SI",
-            area:"METRIC",
-            volume: "SI",
-            degree: "SI",
-            distance: "METRIC"
-        },
-        "it-IT": {
-            weight: "SI",
-            speed:"SI",
-            area:"SI",
-            volume: "SI",
-            degree: "SI",
-            distance: "METRIC"
-        },
-        "en-US": {
-            weight: "IMPERIAL",
-            speed: "IMPERIAL",
-            area: "IMPERIAL",
-            volume: "IMPERIAL",
-            degree: "IMPERIAL",
-            distance: "IMPERIAL"
+    },
+    conversion_formula: {
+        SI: function (value) {
+            return value * 0.453592;
         }
-    };
+    }
+}
+}
+};
 
-    var CONVERSION = {};
+var CONVERSION = {};
 
 
-    var target_locale;
+var target_som;
 
-    var ConversionRequest = function (params) {
+var ConversionRequest = function (params) {
         // origin locale
-        var origin_locale = params.locale,
+        var origin_som = params.origin_som || "SI",
         input_value = params.value,
         origin_units = (params.units && params.units.toLowerCase()),
         input_type = params.type || UNITS[params.units].type;
 
         var to = function (target_unit) {
 
-            if (!target_locale) {
-                console.error("Please set target locale like this: localeConverter.setTargetLocale('en-US');");
+            if (!target_som) {
+                console.error("Please set target som like this: localeConverter.setTargetSOM('IMPERIAL');");
             }
             else {
-                var target_som = LOCALE[target_locale][input_type];
                 // First normalize to base units
 
                 // Grab the conversion formula from origin_units to base_units for this type and locale
-                var typeObj = SOM[LOCALE[origin_locale][input_type]][input_type];
+                var typeObj = SOM[origin_som][input_type];
 
                 // If we dont get origin_units we should get it from the content (locale) - the common unit
                 origin_units = origin_units || typeObj.common_unit;
 
                 // Apply to input_value
+                
                 var base_value = typeObj.units[origin_units].to_base(input_value);
 
                 // Say we don't have a target_unit, grab the base unit from the locale / field of conversion
@@ -603,13 +576,13 @@ weight: {
         }
     };
 
-    var setTargetLocale = function (_target_locale) {
-        target_locale = _target_locale;
+    var setTargetSOM = function (_target_som) {
+        target_som = _target_som;
     };
 
     // This should be something like
     // {
-    //      locale:"he-IL",
+    //      som:"SI",
     //      value:"6",
     //      units:"KMH"
     // }
@@ -618,9 +591,8 @@ weight: {
     };
 
     return {
-        setTargetLocale: setTargetLocale,
+        setTargetSOM: setTargetSOM,
         convert: convert,
-        UNITS: UNITS,
-        LOCALES: LOCALE
+        UNITS: UNITS
     }
 })();
