@@ -558,7 +558,7 @@ var ConversionRequest = function (params) {
                 var base_value = typeObj.units[origin_units].to_base(input_value);
 
                 // Say we don't have a target_unit, grab the base unit from the locale / field of conversion
-                target_unit = target_unit || SOM[target_som][input_type].common_unit;
+                target_unit = target_unit || (SOM[target_som][input_type] && SOM[target_som][input_type].common_unit) || SOM["SI"][input_type].common_unit;
 
                 // Grab the conversion formula from base_units of input_type from origin_locale to target_locale
                 var si_base_value = typeObj.conversion_formula["SI"](base_value);
