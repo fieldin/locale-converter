@@ -498,6 +498,9 @@ distance:{
         },
         METRIC: function (value) {
             return value * 1.609344;
+        },
+        SI: function (value) {
+            return value * 1.609344;
         } 
     }
 },
