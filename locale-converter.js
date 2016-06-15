@@ -475,12 +475,20 @@ degree:{
 distance:{
     common_unit:"mile",
     units:{
+        feet:{
+            to_base: function (value) {
+                return value / 5280;
+            },
+            from_base: function (value) {
+                return value * 5280;
+            }
+        },
         yard:{
             to_base: function (value) {
                 return value / 1760;
             },
             from_base: function (value) {
-                return value / 1760;
+                return value * 1760;
             }
         },
         mile:{
