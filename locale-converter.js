@@ -52,6 +52,21 @@ var localeConverter = (function () {
             som: "IMPERIAL",
             type: "volume"
         },
+        "FLUID_OZ":{
+            name:"FLUID_OZ",
+            som: "IMPERIAL",
+            type: "volume"
+        },
+        "QUART":{
+            name:"QUART",
+            som: "IMPERIAL",
+            type: "volume"
+        },
+        "PINT":{
+            name:"PINT",
+            som: "IMPERIAL",
+            type: "volume"
+        },
         "KILO": {
             name:"KILO",
             som: "SI",
@@ -439,6 +454,30 @@ var localeConverter = (function () {
                 },
                 from_base: function (value) {
                     return value;
+                }
+            },
+            fluid_oz:{
+                to_base: function(value){
+                    return value / 128;
+                },
+                from_base: function(value){
+                    return value * 128;
+                }
+            },
+            quart:{
+                to_base: function(value){
+                    return value / 4;
+                },
+                from_base: function(value){
+                    return value * 4;
+                }
+            },
+            pint:{
+                to_base: function(value){
+                    return value * 0.125;
+                },
+                from_base: function(value){
+                    return value / 0.125;
                 }
             }
         },
