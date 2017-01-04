@@ -561,7 +561,7 @@ distance:{
                 return value / 1760;
             },
             from_base: function (value) {
-                return value / 1760;
+                return value * 1760;
             }
         },
         mile:{
@@ -578,6 +578,9 @@ distance:{
             return value;
         },
         METRIC: function (value) {
+            return value * 1.609344;
+        },
+        SI: function (value) {
             return value * 1.609344;
         } 
     }
