@@ -122,7 +122,17 @@ var localeConverter = (function () {
             som: "METRIC",
             type: "distance"
         },
+        "MM":{
+            name:"MM",
+            som: "METRIC",
+            type:"distance"
+        },
         "MILE":{
+            name:"MILE",
+            som: "IMPERIAL",
+            type: "distance"
+        },
+        "INCH":{
             name:"MILE",
             som: "IMPERIAL",
             type: "distance"
@@ -169,6 +179,14 @@ var localeConverter = (function () {
             distance:{
                 common_unit:"km",
                 units:{
+                    mm:{
+                        to_base: function (value) {
+                            return value * 0.000001;
+                        },
+                        from_base: function (value) {
+                            return value / 0.000001;
+                        }
+                    },
                     meter:{
                         to_base: function (value) {
                             return value / 1000;
@@ -313,6 +331,14 @@ var localeConverter = (function () {
             distance:{
                 common_unit:"km",
                 units:{
+                    mm:{
+                        to_base: function (value) {
+                            return value * 0.000001;
+                        },
+                        from_base: function (value) {
+                            return value / 0.000001;
+                        }
+                    },
                     meter:{
                         to_base: function (value) {
                             return value / 1000;
@@ -514,6 +540,14 @@ degree:{
 distance:{
     common_unit:"mile",
     units:{
+        inch:{
+            to_base: function (value) {
+                return value * 0.0000157828;
+            },
+            from_base: function (value) {
+                return value / 0.0000157828;
+            }
+        },
         yard:{
             to_base: function (value) {
                 return value / 1760;
