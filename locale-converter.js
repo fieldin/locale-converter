@@ -548,6 +548,14 @@ distance:{
                 return value / 0.0000157828;
             }
         },
+        feet:{
+            to_base: function (value) {
+                return value / 5280;
+            },
+            from_base: function (value) {
+                return value * 5280;
+            }
+        },
         yard:{
             to_base: function (value) {
                 return value / 1760;
