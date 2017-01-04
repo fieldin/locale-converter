@@ -52,6 +52,21 @@ var localeConverter = (function () {
             som: "IMPERIAL",
             type: "volume"
         },
+        "FLUID_OZ":{
+            name:"FLUID_OZ",
+            som: "IMPERIAL",
+            type: "volume"
+        },
+        "QUART":{
+            name:"QUART",
+            som: "IMPERIAL",
+            type: "volume"
+        },
+        "PINT":{
+            name:"PINT",
+            som: "IMPERIAL",
+            type: "volume"
+        },
         "KILO": {
             name:"KILO",
             som: "SI",
@@ -107,7 +122,17 @@ var localeConverter = (function () {
             som: "METRIC",
             type: "distance"
         },
+        "MM":{
+            name:"MM",
+            som: "METRIC",
+            type:"distance"
+        },
         "MILE":{
+            name:"MILE",
+            som: "IMPERIAL",
+            type: "distance"
+        },
+        "INCH":{
             name:"MILE",
             som: "IMPERIAL",
             type: "distance"
@@ -154,6 +179,14 @@ var localeConverter = (function () {
             distance:{
                 common_unit:"km",
                 units:{
+                    mm:{
+                        to_base: function (value) {
+                            return value * 0.000001;
+                        },
+                        from_base: function (value) {
+                            return value / 0.000001;
+                        }
+                    },
                     meter:{
                         to_base: function (value) {
                             return value / 1000;
@@ -298,6 +331,14 @@ var localeConverter = (function () {
             distance:{
                 common_unit:"km",
                 units:{
+                    mm:{
+                        to_base: function (value) {
+                            return value * 0.000001;
+                        },
+                        from_base: function (value) {
+                            return value / 0.000001;
+                        }
+                    },
                     meter:{
                         to_base: function (value) {
                             return value / 1000;
@@ -440,6 +481,30 @@ var localeConverter = (function () {
                 from_base: function (value) {
                     return value;
                 }
+            },
+            fluid_oz:{
+                to_base: function(value){
+                    return value / 128;
+                },
+                from_base: function(value){
+                    return value * 128;
+                }
+            },
+            quart:{
+                to_base: function(value){
+                    return value / 4;
+                },
+                from_base: function(value){
+                    return value * 4;
+                }
+            },
+            pint:{
+                to_base: function(value){
+                    return value * 0.125;
+                },
+                from_base: function(value){
+                    return value / 0.125;
+                }
             }
         },
         conversion_formula:{
@@ -475,12 +540,28 @@ degree:{
 distance:{
     common_unit:"mile",
     units:{
+        inch:{
+            to_base: function (value) {
+                return value * 0.0000157828;
+            },
+            from_base: function (value) {
+                return value / 0.0000157828;
+            }
+        },
+        feet:{
+            to_base: function (value) {
+                return value / 5280;
+            },
+            from_base: function (value) {
+                return value * 5280;
+            }
+        },
         yard:{
             to_base: function (value) {
                 return value / 1760;
             },
             from_base: function (value) {
-                return value / 1760;
+                return value * 1760;
             }
         },
         mile:{
@@ -497,6 +578,9 @@ distance:{
             return value;
         },
         METRIC: function (value) {
+            return value * 1.609344;
+        },
+        SI: function (value) {
             return value * 1.609344;
         } 
     }
